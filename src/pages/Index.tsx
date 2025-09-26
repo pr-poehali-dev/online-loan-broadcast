@@ -182,7 +182,7 @@ function calculatePayment() {
 
       {/* Calculator Section */}
       <section id="calculator" className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
               Калькулятор займа
@@ -192,102 +192,137 @@ function calculatePayment() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8">
-            <Card className="p-6">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Icon name="Calculator" size={24} className="text-primary" />
-                  Параметры займа
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div>
-                  <Label className="text-base font-medium">
-                    Сумма займа: {loanAmount[0].toLocaleString('ru-RU')} ₽
-                  </Label>
-                  <Slider
-                    value={loanAmount}
-                    onValueChange={setLoanAmount}
-                    min={10000}
-                    max={500000}
-                    step={10000}
-                    className="mt-3"
-                  />
-                  <div className="flex justify-between text-sm text-gray-500 mt-2">
-                    <span>10 000 ₽</span>
-                    <span>500 000 ₽</span>
+          <Card className="p-8 shadow-xl bg-gradient-to-br from-white to-blue-50/30">
+            <div className="grid lg:grid-cols-3 gap-8 items-start">
+              {/* Parameters Column */}
+              <div className="lg:col-span-2 space-y-8">
+                <div className="text-center lg:text-left">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center justify-center lg:justify-start gap-2">
+                    <Icon name="Calculator" size={28} className="text-primary" />
+                    Параметры займа
+                  </h3>
+                </div>
+
+                {/* Amount Slider */}
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <Label className="text-lg font-semibold text-gray-900">
+                      Сумма займа
+                    </Label>
+                    <div className="text-4xl font-bold text-primary mt-2">
+                      {loanAmount[0].toLocaleString('ru-RU')} ₽
+                    </div>
+                  </div>
+                  <div className="px-4">
+                    <Slider
+                      value={loanAmount}
+                      onValueChange={setLoanAmount}
+                      min={10000}
+                      max={500000}
+                      step={10000}
+                      className="h-3 touch-pan-x"
+                    />
+                    <div className="flex justify-between text-sm font-medium text-gray-600 mt-3">
+                      <span>10 тыс.</span>
+                      <span>100 тыс.</span>
+                      <span>300 тыс.</span>
+                      <span>500 тыс.</span>
+                    </div>
                   </div>
                 </div>
 
-                <div>
-                  <Label className="text-base font-medium">
-                    Срок займа: {loanPeriod[0]} мес.
-                  </Label>
-                  <Slider
-                    value={loanPeriod}
-                    onValueChange={setLoanPeriod}
-                    min={6}
-                    max={24}
-                    step={6}
-                    className="mt-3"
-                  />
-                  <div className="flex justify-between text-sm text-gray-500 mt-2">
-                    <span>6 мес.</span>
-                    <span>24 мес.</span>
+                {/* Period Slider */}
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <Label className="text-lg font-semibold text-gray-900">
+                      Срок займа
+                    </Label>
+                    <div className="text-3xl font-bold text-secondary mt-2">
+                      {loanPeriod[0]} месяцев
+                    </div>
+                  </div>
+                  <div className="px-4">
+                    <Slider
+                      value={loanPeriod}
+                      onValueChange={setLoanPeriod}
+                      min={6}
+                      max={24}
+                      step={6}
+                      className="h-3 touch-pan-x"
+                    />
+                    <div className="flex justify-between text-sm font-medium text-gray-600 mt-3">
+                      <span>6 мес</span>
+                      <span>12 мес</span>
+                      <span>18 мес</span>
+                      <span>24 мес</span>
+                    </div>
                   </div>
                 </div>
 
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Процентная ставка:</span>
-                    <Badge variant="secondary">15% годовых</Badge>
+                {/* Rate Info */}
+                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-6 rounded-xl border border-primary/20">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Icon name="Percent" size={24} className="text-primary" />
+                      <span className="text-lg font-semibold text-gray-900">Процентная ставка:</span>
+                    </div>
+                    <Badge variant="secondary" className="text-lg px-4 py-2">15% годовых</Badge>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
 
-            <Card className="p-6 bg-gradient-to-br from-primary/5 to-secondary/5">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Icon name="PieChart" size={24} className="text-secondary" />
-                  Расчёт платежей
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between items-center py-3 border-b">
-                  <span className="text-gray-600">Ежемесячный платёж:</span>
-                  <span className="text-2xl font-bold text-primary">
-                    {Math.round(monthlyPayment).toLocaleString('ru-RU')} ₽
-                  </span>
-                </div>
-                
-                <div className="flex justify-between items-center py-3 border-b">
-                  <span className="text-gray-600">Общая сумма к возврату:</span>
-                  <span className="text-lg font-semibold">
-                    {Math.round(totalAmount).toLocaleString('ru-RU')} ₽
-                  </span>
-                </div>
-                
-                <div className="flex justify-between items-center py-3 border-b">
-                  <span className="text-gray-600">Переплата:</span>
-                  <span className="text-lg font-semibold text-accent">
-                    {Math.round(overpayment).toLocaleString('ru-RU')} ₽
-                  </span>
-                </div>
+              {/* Results Column */}
+              <div className="lg:col-span-1">
+                <div className="bg-white rounded-2xl p-6 shadow-xl border border-gray-100 sticky top-8">
+                  <div className="text-center mb-6">
+                    <Icon name="PieChart" size={32} className="text-secondary mx-auto mb-2" />
+                    <h3 className="text-xl font-bold text-gray-900">Ваш расчёт</h3>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    {/* Monthly Payment - Main highlight */}
+                    <div className="text-center p-4 bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl border border-primary/20">
+                      <div className="text-sm text-gray-600 mb-1">Ежемесячно</div>
+                      <div className="text-3xl font-bold text-primary">
+                        {Math.round(monthlyPayment).toLocaleString('ru-RU')} ₽
+                      </div>
+                    </div>
+                    
+                    {/* Total Amount */}
+                    <div className="flex justify-between items-center py-3 border-b border-gray-200">
+                      <span className="text-gray-600 font-medium">Общая сумма:</span>
+                      <span className="text-lg font-bold text-gray-900">
+                        {Math.round(totalAmount).toLocaleString('ru-RU')} ₽
+                      </span>
+                    </div>
+                    
+                    {/* Overpayment */}
+                    <div className="flex justify-between items-center py-3 border-b border-gray-200">
+                      <span className="text-gray-600 font-medium">Переплата:</span>
+                      <span className="text-lg font-bold text-accent">
+                        {Math.round(overpayment).toLocaleString('ru-RU')} ₽
+                      </span>
+                    </div>
 
-                <Separator className="my-4" />
-
-                <Button className="w-full text-lg py-4" size="lg">
-                  <Icon name="Send" size={20} className="mr-2" />
-                  Подать заявку на {loanAmount[0].toLocaleString('ru-RU')} ₽
-                </Button>
-                
-                <p className="text-sm text-gray-500 text-center">
-                  Решение принимается автоматически в течение 5-15 минут
-                </p>
-              </CardContent>
-            </Card>
-          </div>
+                    {/* Apply Button */}
+                    <Button className="w-full text-lg py-6 text-white shadow-lg hover:shadow-xl transition-all duration-200" size="lg">
+                      <Icon name="Send" size={20} className="mr-2" />
+                      Получить {loanAmount[0].toLocaleString('ru-RU')} ₽
+                    </Button>
+                    
+                    <div className="text-center space-y-2">
+                      <p className="text-sm text-green-600 font-medium">
+                        ✓ Решение за 15 минут
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        Деньги поступят на карту сразу после одобрения
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>
         </div>
       </section>
 
